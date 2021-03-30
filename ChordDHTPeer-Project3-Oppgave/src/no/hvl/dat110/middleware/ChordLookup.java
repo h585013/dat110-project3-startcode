@@ -5,6 +5,7 @@ package no.hvl.dat110.middleware;
 
 import java.math.BigInteger;
 import java.rmi.RemoteException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,7 +27,6 @@ public class ChordLookup {
 	}
 	
 	public NodeInterface findSuccessor(BigInteger key) throws RemoteException {
-		
 		// ask this node to find the successor of key
 		
 		// get the successor of the node
@@ -40,8 +40,8 @@ public class ChordLookup {
 		// if logic returns false; call findHighestPredecessor(key)
 		
 		// do return highest_pred.findSuccessor(key) - This is a recursive call until logic returns true
-				
-		return null;					
+		
+		return null;				
 	}
 	
 	/**
@@ -51,10 +51,12 @@ public class ChordLookup {
 	 * @throws RemoteException
 	 */
 	private NodeInterface findHighestPredecessor(BigInteger key) throws RemoteException {
-		
+		System.out.println(key);
 		// collect the entries in the finger table for this node
+		List<NodeInterface> ft = node.getFingerTable();
 		
 		// starting from the last entry, iterate over the finger table
+		System.out.println(ft.size());
 		
 		// for each finger, obtain a stub from the registry
 		
@@ -65,7 +67,7 @@ public class ChordLookup {
 		return (NodeInterface) node;			
 	}
 	
-	public void copyKeysFromSuccessor(NodeInterface succ) {
+	public void copyKeysFromSuccessor(NodeInterface succ) throws NoSuchAlgorithmException {
 		
 		Set<BigInteger> filekeys;
 		try {
