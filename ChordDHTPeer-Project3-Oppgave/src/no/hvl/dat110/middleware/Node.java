@@ -3,6 +3,7 @@ package no.hvl.dat110.middleware;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,7 +43,7 @@ public class Node extends UnicastRemoteObject implements NodeInterface {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public Node(String nodename, int port) throws RemoteException {
+	public Node(String nodename, int port) throws RemoteException, NoSuchAlgorithmException {
 		super();
 		this.port = port;
 		this.nodename = nodename;									// use a different name as "IP" for single machine simulation
@@ -129,7 +130,7 @@ public class Node extends UnicastRemoteObject implements NodeInterface {
 	}
 	
 	//@Override
-	public void copyKeysFromSuccessor(NodeInterface succ) {
+	public void copyKeysFromSuccessor(NodeInterface succ) throws NoSuchAlgorithmException {
 		
 		lookup.copyKeysFromSuccessor(succ);
 	}
