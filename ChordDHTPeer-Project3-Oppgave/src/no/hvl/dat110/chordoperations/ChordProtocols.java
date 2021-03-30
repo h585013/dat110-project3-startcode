@@ -5,6 +5,7 @@ package no.hvl.dat110.chordoperations;
 
 import java.math.BigInteger;
 import java.rmi.RemoteException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import no.hvl.dat110.middleware.Node;
@@ -99,6 +100,8 @@ public class ChordProtocols {
 			}
 		} catch (RemoteException e) {
 			//e.printStackTrace();
+		} catch (NoSuchAlgorithmException e1) {
+			e1.printStackTrace();
 		}
 	}
 	
@@ -138,6 +141,8 @@ public class ChordProtocols {
 			System.out.println("Finished stabilizing chordring from "+chordnode.getNodeName());
 		} catch (RemoteException e) {
 			System.out.println("Error stabilizing chordring ...");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
 		}
 		
 	}
