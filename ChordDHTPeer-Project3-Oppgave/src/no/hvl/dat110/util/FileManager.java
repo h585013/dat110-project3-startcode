@@ -53,14 +53,14 @@ public class FileManager {
 	}
 
 	public void createReplicaFiles() throws NoSuchAlgorithmException {
-				// implement
-				// set a loop where size = numReplicas
+		// implement
+		// set a loop where size = numReplicas
 		for (int i = 0; i < numReplicas; i++) {
-			
-				// replicate by adding the index to filename
+
+			// replicate by adding the index to filename
 			String index = filename + i;
 
-				// hash the replica and store the hash in the replicafiles array.
+			// hash the replica and store the hash in the replicafiles array.
 			replicafiles[i] = Hash.hashOf(index);
 		}
 
@@ -70,7 +70,7 @@ public class FileManager {
 	 * 
 	 * @param bytesOfFile
 	 * @throws RemoteException
-	 * @throws NoSuchAlgorithmException 
+	 * @throws NoSuchAlgorithmException
 	 */
 	public int distributeReplicastoPeers() throws RemoteException, NoSuchAlgorithmException {
 		int counter = 0;
@@ -82,30 +82,26 @@ public class FileManager {
 		// (project 3) on Canvas
 
 		// create replicas of the filename
-		createReplicaFiles(); 
-	
+		createReplicaFiles();
 
 		// iterate over the replicas
 
-		for(int i = 0; i < replicafiles.length;  i++) {
-			BigInteger index = replicafiles[i]; 
-			
+		for (int i = 0; i < replicafiles.length; i++) {
+			BigInteger index = replicafiles[i];
+
 			// for each replica, find its successor by performing findSuccessor(replica)
-			NodeInterface successor = chordnode.findSuccessor(index); 
-			
+			NodeInterface successor = chordnode.findSuccessor(index);
+
 			// call the addKey on the successor and add the replica
 			successor.addKey(index);
-			
+
 			// call the saveFileContent() on the successor
 			successor.saveFileContent(filename, index, bytesOfFile, true);
 
 			// increment counter
-			counter++; 
-		
+			counter++;
+
 		}
-
-
-		
 
 		return counter;
 	}
@@ -115,24 +111,33 @@ public class FileManager {
 	 * @param filename
 	 * @return list of active nodes having the replicas of this file
 	 * @throws RemoteException
+	 * @throws NoSuchAlgorithmException
 	 */
-	public Set<Message> requestActiveNodesForFile(String filename) throws RemoteException {
+	public Set<Message> requestActiveNodesForFile(String filename) throws RemoteException, NoSuchAlgorithmException {
 
 		this.filename = filename;
 		Set<Message> succinfo = new HashSet<Message>();
 		// Task: Given a filename, find all the peers that hold a copy of this file
 
 		// generate the N replicas from the filename by calling createReplicaFiles()
+		createReplicaFiles();
 
 		// it means, iterate over the replicas of the file
+		for (BigInteger e : replicafiles) {
+			// for each replica, do findSuccessor(replica) that returns successor s.
 
-		// for each replica, do findSuccessor(replica) that returns successor s.
+			NodeInterface successor = chordnode.findSuccessor(e);
 
-		// get the metadata (Message) of the replica from the successor, s (i.e. active
-		// peer) of the file
+			// get the metadata (Message) of the replica from the successor, s (i.e. active
+			// peer) of the file
 
-		// save the metadata in the set succinfo.
+			Message m = successor.getFilesMetadata(e);
 
+			// save the metadata in the set succinfo.
+
+			succinfo.add(m);
+
+		}
 		this.activeNodesforFile = succinfo;
 
 		return succinfo;

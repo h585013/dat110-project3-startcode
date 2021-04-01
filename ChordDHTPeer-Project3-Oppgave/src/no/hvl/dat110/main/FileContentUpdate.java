@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -80,7 +81,12 @@ public class FileContentUpdate extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				btnUpdateContent();
+				try {
+					btnUpdateContent();
+				} catch (NoSuchAlgorithmException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			
 		});
@@ -132,7 +138,7 @@ public class FileContentUpdate extends JFrame {
 	        
 	}
 	
-	private void btnUpdateContent() {
+	private void btnUpdateContent() throws NoSuchAlgorithmException {
 		
 		String newcontent = txtArea.getText();
 		
