@@ -145,20 +145,28 @@ public class FileManager {
 	 * Find the primary server - Remote-Write Protocol
 	 * 
 	 * @return
+	 * @throws RemoteException 
 	 */
-	public NodeInterface findPrimaryOfItem() {
+	public NodeInterface findPrimaryOfItem() throws RemoteException {
 
 		// Task: Given all the active peers of a file (activeNodesforFile()), find which
 		// is holding the primary copy
 
 		// iterate over the activeNodesforFile
+		Set<Message> aktiveNoder = getActiveNodesforFile();
 
 		// for each active peer (saved as Message)
+		for (Message m : aktiveNoder) {
 
-		// use the primaryServer boolean variable contained in the Message class to
-		// check if it is the primary or not
+			// use the primaryServer boolean variable contained in the Message class to
+			// check if it is the primary or not
+			if (m.isPrimaryServer()) {
+				BigInteger nodeid = m.getNodeID();
+				return this.chordnode.findSuccessor(nodeid);
+			}
 
-		// return the primary
+			// return the primary
+		}
 
 		return null;
 	}
