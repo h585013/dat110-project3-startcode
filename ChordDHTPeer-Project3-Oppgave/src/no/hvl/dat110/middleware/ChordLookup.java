@@ -42,6 +42,7 @@ public class ChordLookup {
 
 		// if logic returns true, then return the successor
 		if (medlem == true) {
+			System.out.println(successor.getNodeID());
 			return successor;
 
 		} else {
@@ -63,20 +64,27 @@ public class ChordLookup {
 	 * @throws RemoteException
 	 */
 	private NodeInterface findHighestPredecessor(BigInteger key) throws RemoteException {
-		System.out.println(key);
+		
 		// collect the entries in the finger table for this node
 		List<NodeInterface> ft = node.getFingerTable();
 
 		// starting from the last entry, iterate over the finger table
-		System.out.println(ft.size());
+		for (int i = ft.size()-1; i > 0; i--) {
+			// for each finger, obtain a stub from the registry
+			NodeInterface potensiell = Util.getProcessStub(ft.get(i).getNodeName(), ft.get(i).getPort());
+			
+			// check that finger is a member of the set {nodeID+1,...,ID-1} i.e. (nodeID+1
+			// <= finger <= key-1) using the ComputeLogic
+			Boolean medlem = Util.computeLogic(key, node.getNodeID(), potensiell.getNodeID());
+			
+			// if logic returns true, then return the finger (means finger is the closest to
+			// key)
+			if (medlem == true) {
+				System.out.println(ft.get(i).getNodeID());
+				return ft.get(i);
+			}
+		} 
 
-		// for each finger, obtain a stub from the registry
-
-		// check that finger is a member of the set {nodeID+1,...,ID-1} i.e. (nodeID+1
-		// <= finger <= key-1) using the ComputeLogic
-
-		// if logic returns true, then return the finger (means finger is the closest to
-		// key)
 
 		return (NodeInterface) node;
 	}
