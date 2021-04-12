@@ -6,9 +6,7 @@ package no.hvl.dat110.util;
  *
  */
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -31,7 +29,7 @@ public class Hash {
 		// convert the hex into BigInteger
 		String hex = toHex(digest);
 		// return the BigInteger
-		BigInteger hashint = new BigInteger(hex, 16);
+		hashint = new BigInteger(hex, 16);
 		
 		return hashint;
 	}
