@@ -15,7 +15,7 @@ import no.hvl.dat110.util.Hash;
 import no.hvl.dat110.util.Util;
 
 /**
- * @author tdoy
+ * @author Anne
  *
  */
 public class ChordLookup {
