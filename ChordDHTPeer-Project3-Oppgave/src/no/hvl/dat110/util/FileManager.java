@@ -14,12 +14,10 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import no.hvl.dat110.middleware.Message;
 import no.hvl.dat110.rpc.interfaces.NodeInterface;
-import no.hvl.dat110.util.Hash;
 
 public class FileManager {
 
