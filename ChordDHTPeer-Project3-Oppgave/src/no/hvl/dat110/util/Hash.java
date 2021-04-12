@@ -15,10 +15,16 @@ public class Hash {
 	private static BigInteger hashint;
 
 	public static BigInteger hashOf(String entity) throws NoSuchAlgorithmException {
+<<<<<<< Updated upstream
 
 		// Task: Hash a given string using MD5 and return the result as a BigInteger.
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		
+=======
+		System.out.println("String: " + entity);
+		// Task: Hash a given string using MD5 and return the result as a BigInteger.
+		MessageDigest md = MessageDigest.getInstance("MD5");
+>>>>>>> Stashed changes
 		// we use MD5 with 128 bits digest
 
 		// compute the hash of the input 'entity'
@@ -29,9 +35,15 @@ public class Hash {
 		// convert the hex into BigInteger
 		String hex = toHex(digest);
 		// return the BigInteger
+<<<<<<< Updated upstream
 		hashint = new BigInteger(hex, 16);
 		
 		return hashint;
+=======
+		BigInteger hashhint = new BigInteger(hex, 16);
+		System.out.println("hash: " + hashhint);
+		return hashhint;
+>>>>>>> Stashed changes
 	}
 
 	public static BigInteger addressSize() throws NoSuchAlgorithmException {
