@@ -28,6 +28,7 @@ public class ChordLookup {
 	}
 
 	public NodeInterface findSuccessor(BigInteger key) throws RemoteException {
+		System.out.println("key = " + key);
 		// ask this node to find the successor of key
 		NodeInterface successor = node.getSuccessor();
 
