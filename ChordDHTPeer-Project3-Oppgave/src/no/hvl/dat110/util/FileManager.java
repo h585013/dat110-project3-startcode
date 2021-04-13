@@ -72,8 +72,7 @@ public class FileManager {
 	 * @throws RemoteException
 	 * @throws NoSuchAlgorithmException
 	 */
-	
-	
+
 	public int distributeReplicastoPeers() throws RemoteException, NoSuchAlgorithmException {
 		int counter = 0;
 
@@ -83,18 +82,16 @@ public class FileManager {
 		// Task2: assign a replica as the primary for this file. Hint, see the slide
 		// (project 3) on Canvas
 		Random rnd = new Random();
-		int ind = rnd.nextInt(Util.numReplicas-1);
+		int ind = rnd.nextInt(Util.numReplicas - 1);
 
 		// create replicas of the filename
 		createReplicaFiles();
-		
+
 		int randomNum = ThreadLocalRandom.current().nextInt(0, replicafiles.length);
 
 		// iterate over the replicas
 
-		for (BigInteger fileId : replicafiles) {//int i = 0; i < replicafiles.length; i++) {
-			
-//			BigInteger index = replicafiles[i];
+		for (BigInteger fileId : replicafiles) {
 
 			// for each replica, find its successor by performing findSuccessor(replica)
 			NodeInterface successor = chordnode.findSuccessor(fileId);
@@ -103,13 +100,12 @@ public class FileManager {
 			successor.addKey(fileId);
 
 			// call the saveFileContent() on the successor
-//			successor.saveFileContent(filename, fileId, bytesOfFile, i == randomNum);
 			if (counter == ind) {
 				successor.saveFileContent(filename, fileId, bytesOfFile, true);
 			} else {
 				successor.saveFileContent(filename, fileId, bytesOfFile, false);
 			}
-			
+
 			// increment counter
 			counter++;
 
@@ -159,8 +155,8 @@ public class FileManager {
 	 * Find the primary server - Remote-Write Protocol
 	 * 
 	 * @return
-	 * @throws RemoteException 
-	 * @throws NoSuchAlgorithmException 
+	 * @throws RemoteException
+	 * @throws NoSuchAlgorithmException
 	 */
 	public NodeInterface findPrimaryOfItem() throws RemoteException, NoSuchAlgorithmException {
 
@@ -178,7 +174,7 @@ public class FileManager {
 			// check if it is the primary or not
 			if (m.isPrimaryServer()) {
 //				m.getHashOfFile();
-				return this.chordnode.findSuccessor(m.getHashOfFile());//m.getNodeID());
+				return this.chordnode.findSuccessor(m.getHashOfFile());// m.getNodeID());
 			}
 
 			// return the primary
