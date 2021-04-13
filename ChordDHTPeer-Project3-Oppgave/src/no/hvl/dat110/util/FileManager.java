@@ -152,14 +152,16 @@ public class FileManager {
 	 * 
 	 * @return
 	 * @throws RemoteException 
+	 * @throws NoSuchAlgorithmException 
 	 */
-	public NodeInterface findPrimaryOfItem() throws RemoteException {
+	public NodeInterface findPrimaryOfItem() throws RemoteException, NoSuchAlgorithmException {
 
 		// Task: Given all the active peers of a file (activeNodesforFile()), find which
 		// is holding the primary copy
 
 		// iterate over the activeNodesforFile
-		Set<Message> aktiveNoder = getActiveNodesforFile();
+//		Set<Message> aktiveNoder = getActiveNodesforFile();
+		Set<Message> aktiveNoder = requestActiveNodesForFile(this.filename);
 
 		// for each active peer (saved as Message)
 		for (Message m : aktiveNoder) {
@@ -167,7 +169,8 @@ public class FileManager {
 			// use the primaryServer boolean variable contained in the Message class to
 			// check if it is the primary or not
 			if (m.isPrimaryServer()) {
-				return this.chordnode.findSuccessor(m.getNodeID());
+//				m.getHashOfFile();
+				return this.chordnode.findSuccessor(m.getHashOfFile());//m.getNodeID());
 			}
 
 			// return the primary
