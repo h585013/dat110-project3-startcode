@@ -63,7 +63,7 @@ public class MutualExclusion {
 		message.setClock(this.clock.getClock());
 
 		// wants to access resource - set the appropriate lock variable
-		acquireLock(); // ?
+		this.WANTS_TO_ENTER_CS = true;
 
 		// start MutualExclusion algorithm
 
@@ -75,12 +75,13 @@ public class MutualExclusion {
 		multicastMessage(message, activeNodes);
 
 		// check that all replicas have replied (permission)
-
+		
 		// if yes, acquireLock
 
 		// node.broadcastUpdatetoPeers
 
 		// clear the mutexqueue
+		this.mutexqueue.clear();
 
 		// return permission
 
@@ -94,9 +95,10 @@ public class MutualExclusion {
 		for (Message m : activenodes) {
 
 			// obtain a stub for each node from the registry
-			
+			NodeInterface stub = Util.getProcessStub(m.getNodeIP(), m.getPort()); //?
 
 			// call onMutexRequestReceived()
+			onMutexRequestReceived(m);
 		}
 
 	}
