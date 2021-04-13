@@ -167,8 +167,7 @@ public class FileManager {
 			// use the primaryServer boolean variable contained in the Message class to
 			// check if it is the primary or not
 			if (m.isPrimaryServer()) {
-				BigInteger nodeid = m.getNodeID();
-				return this.chordnode.findSuccessor(nodeid);
+				return this.chordnode.findSuccessor(m.getNodeID());
 			}
 
 			// return the primary
