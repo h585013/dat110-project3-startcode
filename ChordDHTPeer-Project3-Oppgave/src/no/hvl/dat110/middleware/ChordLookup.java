@@ -42,7 +42,7 @@ public class ChordLookup {
 		Boolean medlem = Util.computeLogic(key, node.getNodeID().add(BigInteger.ONE), successor.getNodeID());
 
 		// if logic returns true, then return the successor
-		if (medlem == true) {
+		if (medlem) {
 			return successor;
 
 		} else {
@@ -69,7 +69,7 @@ public class ChordLookup {
 		List<NodeInterface> ft = node.getFingerTable();
 
 		// starting from the last entry, iterate over the finger table
-		for (int i = ft.size()-1; i > 0; i--) {
+		for (int i = ft.size()-1; i >= 0; i--) {
 			// for each finger, obtain a stub from the registry
 			NodeInterface potensiell = Util.getProcessStub(ft.get(i).getNodeName(), ft.get(i).getPort());
 			
@@ -79,7 +79,7 @@ public class ChordLookup {
 			
 			// if logic returns true, then return the finger (means finger is the closest to
 			// key)
-			if (medlem == true) {
+			if (medlem) {
 				return potensiell;//ft.get(i);
 			}
 		} 
