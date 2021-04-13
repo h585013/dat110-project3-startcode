@@ -30,8 +30,6 @@ public class ChordLookup {
 	public NodeInterface findSuccessor(BigInteger key) throws RemoteException {
 		// ask this node to find the successor of key
 		NodeInterface successor = node.getSuccessor();
-		System.out.println("key: " + key + ", " + this.node.getNodeName() + ", " + this.node.getNodeID());
-		System.out.println("successor: " + successor.getNodeName() + ", " + successor.getNodeID());
 
 		// get the successor of the node
 
@@ -82,7 +80,7 @@ public class ChordLookup {
 			// if logic returns true, then return the finger (means finger is the closest to
 			// key)
 			if (medlem == true) {
-				return ft.get(i);
+				return potensiell;//ft.get(i);
 			}
 		} 
 
