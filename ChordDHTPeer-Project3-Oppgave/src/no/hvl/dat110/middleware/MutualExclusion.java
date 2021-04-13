@@ -131,7 +131,6 @@ public class MutualExclusion {
 			caseid = 0;
 		} else if (this.CS_BUSY) {
 			caseid = 1;
-			this.mutexqueue.add(message);
 		} else if (this.WANTS_TO_ENTER_CS) {
 			caseid = 2;
 		}
@@ -153,8 +152,13 @@ public class MutualExclusion {
 		 */
 		case 0: {
 			// get a stub for the sender from the registry
+			NodeInterface stub = Util.getProcessStub(message.getNodeIP(), message.getPort());
+			
 			// acknowledge message
+			message.setAcknowledged(true);
+			
 			// send acknowledgement back by calling onMutexAcknowledgementReceived()
+			onMutexAcknowledgementReceived(message);
 
 			break;
 		}
@@ -166,6 +170,7 @@ public class MutualExclusion {
 		case 1: {
 
 			// queue this message
+			this.mutexqueue.add(message);
 			break;
 		}
 
@@ -176,9 +181,29 @@ public class MutualExclusion {
 		 */
 		case 2: {
 			// check the clock of the sending process
+			int klokkeSender = message.getClock();
+			
 			// own clock for the multicast message
+			int egenKlokke = this.clock.getClock();
+			
 			// compare clocks, the lowest wins
 			// if clocks are the same, compare nodeIDs, the lowest wins
+			if (klokkeSender == egenKlokke) {
+				BigInteger senderID = message.getNodeID();
+				BigInteger egenID = this.node.getNodeID();
+				if (senderID.compareTo(egenID) < 0) {
+					// sender vinner:
+					message.setAcknowledged(true);
+					NodeInterface stub = Util.getProcessStub(message.getNodeIP(), message.getPort()); //?
+					onMutexAcknowledgementReceived(message);
+				}
+			} else if (klokkeSender < egenKlokke) {
+				this.mutexqueue.add(message);
+			} else {
+				message.setAcknowledged(true);
+				NodeInterface stub = Util.getProcessStub(message.getNodeIP(), message.getPort()); //?
+				onMutexAcknowledgementReceived(message);
+			}
 			// if sender wins, acknowledge the message, obtain a stub and call
 			// onMutexAcknowledgementReceived()
 			// if sender looses, queue it
