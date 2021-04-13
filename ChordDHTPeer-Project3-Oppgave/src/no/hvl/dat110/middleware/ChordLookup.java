@@ -43,7 +43,6 @@ public class ChordLookup {
 
 		// if logic returns true, then return the successor
 		if (medlem == true) {
-			System.out.println(successor.getNodeID());
 			return successor;
 
 		} else {
