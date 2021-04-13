@@ -40,7 +40,14 @@ public class ChordLookup {
 		// key <= succID) using the ComputeLogic
 		//
 		Boolean medlem = Util.computeLogic(key, node.getNodeID().add(BigInteger.ONE), successor.getNodeID());
-
+		
+		String fakeKey = key.toString();
+		fakeKey = fakeKey.substring(0, fakeKey.length()-35);
+		String fakeNode = node.getNodeID().add(BigInteger.ONE).toString();
+		fakeNode = fakeNode.substring(0, fakeNode.length()-35);
+		String fakeSucc = successor.getNodeID().toString();
+		fakeSucc = fakeSucc.substring(0, fakeSucc.length()-35);
+		System.out.println("key = " + fakeKey + ", node = " + fakeNode + ", succ = " + fakeSucc + " --> medlem? " + medlem);
 		// if logic returns true, then return the successor
 		if (medlem) {
 			System.out.println("(medlem) Successor for Prosessen " + this.node.getNodeName() + " er : " + successor.getNodeID());
