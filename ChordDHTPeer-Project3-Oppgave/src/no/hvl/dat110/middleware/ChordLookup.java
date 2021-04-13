@@ -43,13 +43,13 @@ public class ChordLookup {
 
 		// if logic returns true, then return the successor
 		if (medlem) {
+			System.out.println("(medlem) Successor for Prosessen " + this.node.getNodeName() + " er : " + successor.getNodeID());
 			return successor;
 
 		} else {
 
 			// if logic returns false; call findHighestPredecessor(key)
 			// do return highest_pred.findSuccessor(key) - This is a recursive call until
-			
 			return findHighestPredecessor(key).findSuccessor(key);
 
 		}
@@ -80,11 +80,12 @@ public class ChordLookup {
 			// if logic returns true, then return the finger (means finger is the closest to
 			// key)
 			if (medlem) {
+				System.out.println("(ikke medlem -> medlem) Successor for Prosessen " + this.node.getNodeName() + " er : " + potensiell.getNodeID());
 				return potensiell;//ft.get(i);
 			}
 		} 
 
-
+		System.out.println("(ikke medlem x2) Successor for Prosessen " + this.node.getNodeName() + " er : " + node.getNodeID());
 		return (NodeInterface) node;
 	}
 
