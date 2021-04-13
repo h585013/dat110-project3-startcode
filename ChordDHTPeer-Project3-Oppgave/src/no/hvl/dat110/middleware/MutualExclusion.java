@@ -220,6 +220,7 @@ public class MutualExclusion {
 	public void onMutexAcknowledgementReceived(Message message) throws RemoteException {
 
 		// add message to queueack
+		this.queueack.add(message);
 
 	}
 
@@ -227,21 +228,27 @@ public class MutualExclusion {
 	public void multicastReleaseLocks(Set<Message> activenodes) {
 
 		// iterate over the activenodes
+		for (Message m : activenodes) {
 
 		// obtain a stub for each node from the registry
+			NodeInterface stub = Util.getProcessStub(m.getNodeIP(), m.getPort());
 
 		// call releaseLocks()
+			releaseLocks(); // utenfor?
+		}
 
 	}
 
 	private boolean areAllMessagesReturned(int numvoters) throws RemoteException {
 		// check if the size of the queueack is same as the numvoters
+		boolean allM = this.queueack.size() == numvoters;
 
 		// clear the queueack
+		this.queueack.clear();
 
 		// return true if yes and false if no
 
-		return false;
+		return allM;
 	}
 
 	private List<Message> removeDuplicatePeersBeforeVoting() {
