@@ -61,7 +61,7 @@ public class Util {
 				} else {
 					return false;
 				}
-			} else {
+			} else if (lowerMod.compareTo(upperMod) < 0){
 				// Sjekker om lower <= id <= upper blir til
 				// lower <= id && id <= upper
 				if (lowerMod.compareTo(idMod) <= 0 && idMod.compareTo(upperMod) <= 0) {
@@ -69,6 +69,8 @@ public class Util {
 				} else {
 					return false;
 				}
+			} else {
+				return lowerMod.compareTo(idMod) == 0;
 			}
 		} catch (NoSuchAlgorithmException e) {
 			System.out.println("Hash.addressSize() kaster unntak");
