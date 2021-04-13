@@ -18,7 +18,7 @@ public class Hash {
 
 		// Task: Hash a given string using MD5 and return the result as a BigInteger.
 		MessageDigest md = MessageDigest.getInstance("MD5");
-		
+
 		// we use MD5 with 128 bits digest
 
 		// compute the hash of the input 'entity'
@@ -29,9 +29,11 @@ public class Hash {
 		// convert the hex into BigInteger
 		String hex = toHex(digest);
 		// return the BigInteger
+
 		hashint = new BigInteger(hex, 16);
-		
+
 		return hashint;
+
 	}
 
 	public static BigInteger addressSize() throws NoSuchAlgorithmException {
