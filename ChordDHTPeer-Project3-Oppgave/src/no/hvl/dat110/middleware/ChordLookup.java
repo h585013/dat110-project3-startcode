@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public class ChordLookup {
 		// check that key is a member of the set {nodeid+1,...,succID} i.e. (nodeid+1 <=
 		// key <= succID) using the ComputeLogic
 
-		Boolean medlem = Util.computeLogic(key, node.getNodeID(), successor.getNodeID());
+		Boolean medlem = Util.computeLogic(key, node.getNodeID().add(BigInteger.ONE), successor.getNodeID());
 
 		// if logic returns true, then return the successor
 		if (medlem == true) {
