@@ -15,6 +15,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 import no.hvl.dat110.middleware.Message;
 import no.hvl.dat110.rpc.interfaces.NodeInterface;
@@ -70,6 +71,8 @@ public class FileManager {
 	 * @throws RemoteException
 	 * @throws NoSuchAlgorithmException
 	 */
+	
+	
 	public int distributeReplicastoPeers() throws RemoteException, NoSuchAlgorithmException {
 		int counter = 0;
 
@@ -81,6 +84,9 @@ public class FileManager {
 
 		// create replicas of the filename
 		createReplicaFiles();
+		
+		int randomNum = ThreadLocalRandom.current().nextInt(0, replicafiles.length);
+
 
 		// iterate over the replicas
 
@@ -94,7 +100,7 @@ public class FileManager {
 			successor.addKey(index);
 
 			// call the saveFileContent() on the successor
-			successor.saveFileContent(filename, index, bytesOfFile, true);
+			successor.saveFileContent(filename, index, bytesOfFile, i == randomNum);
 
 			// increment counter
 			counter++;
