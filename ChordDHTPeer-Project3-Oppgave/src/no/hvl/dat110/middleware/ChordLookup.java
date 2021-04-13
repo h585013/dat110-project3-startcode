@@ -49,7 +49,7 @@ public class ChordLookup {
 
 			// if logic returns false; call findHighestPredecessor(key)
 			// do return highest_pred.findSuccessor(key) - This is a recursive call until
-
+			
 			return findHighestPredecessor(key).findSuccessor(key);
 
 		}
@@ -75,7 +75,7 @@ public class ChordLookup {
 			
 			// check that finger is a member of the set {nodeID+1,...,ID-1} i.e. (nodeID+1
 			// <= finger <= key-1) using the ComputeLogic
-			Boolean medlem = Util.computeLogic(key, node.getNodeID().add(BigInteger.ONE), potensiell.getNodeID().subtract(BigInteger.ONE));
+			Boolean medlem = Util.computeLogic(potensiell.getNodeID(), node.getNodeID().add(BigInteger.ONE), key.subtract(BigInteger.ONE));
 			
 			// if logic returns true, then return the finger (means finger is the closest to
 			// key)
