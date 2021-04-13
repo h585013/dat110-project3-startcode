@@ -47,7 +47,8 @@ public class Hash {
 		// compute the address size = 2 ^ number of bits
 		int Str = (int) Math.pow(2, nrBits);
 		// return the address size
-		BigInteger addressSize = BigInteger.valueOf(Str);
+//		BigInteger addressSize = BigInteger.valueOf(Str);
+		BigInteger addressSize = (BigInteger.ONE.add(BigInteger.ONE)).pow(nrBits);
 		return addressSize;
 	}
 
