@@ -76,15 +76,17 @@ public class MutualExclusion {
 
 		// check that all replicas have replied (permission)
 		boolean allReplicasReplied= areAllMessagesReturned(activeNodes.size());
+		System.out.println(allReplicasReplied);
 		// if yes, acquireLock
         if(allReplicasReplied) {
         	node.acquireLock();
         	node.broadcastUpdatetoPeers(updates);
+        	this.mutexqueue.clear();
         }
 		// node.broadcastUpdatetoPeers
 
 		// clear the mutexqueue
-		this.mutexqueue.clear();
+		
 
 		// return permission
 
@@ -101,7 +103,7 @@ public class MutualExclusion {
 			NodeInterface stub = Util.getProcessStub(m.getNodeIP(), m.getPort()); //?
 
 			// call onMutexRequestReceived()
-			onMutexRequestReceived(m);
+			stub.onMutexRequestReceived(m);
 		}
 
 	}
@@ -161,7 +163,7 @@ public class MutualExclusion {
 			message.setAcknowledged(true);
 			
 			// send acknowledgement back by calling onMutexAcknowledgementReceived()
-			onMutexAcknowledgementReceived(message);
+			stub.onMutexAcknowledgementReceived(message);
 
 			break;
 		}
@@ -198,14 +200,14 @@ public class MutualExclusion {
 					// sender vinner:
 					message.setAcknowledged(true);
 					NodeInterface stub = Util.getProcessStub(message.getNodeIP(), message.getPort()); //?
-					onMutexAcknowledgementReceived(message);
+					stub.onMutexAcknowledgementReceived(message);
 				}
 			} else if (klokkeSender < egenKlokke) {
 				this.mutexqueue.add(message);
 			} else {
 				message.setAcknowledged(true);
 				NodeInterface stub = Util.getProcessStub(message.getNodeIP(), message.getPort()); //?
-				onMutexAcknowledgementReceived(message);
+				stub.onMutexAcknowledgementReceived(message);
 			}
 			// if sender wins, acknowledge the message, obtain a stub and call
 			// onMutexAcknowledgementReceived()
@@ -228,7 +230,7 @@ public class MutualExclusion {
 	}
 
 	// multicast release locks message to other processes including self
-	public void multicastReleaseLocks(Set<Message> activenodes) {
+	public void multicastReleaseLocks(Set<Message> activenodes) throws RemoteException {
 
 		// iterate over the activenodes
 		for (Message m : activenodes) {
@@ -237,9 +239,9 @@ public class MutualExclusion {
 			NodeInterface stub = Util.getProcessStub(m.getNodeIP(), m.getPort());
 
 		// call releaseLocks()
-			releaseLocks(); // utenfor?
+			stub.releaseLocks(); // utenfor?
 		}
-
+		
 	}
 
 	private boolean areAllMessagesReturned(int numvoters) throws RemoteException {
