@@ -55,20 +55,12 @@ public class Util {
 				// lower <= id <= upper blir til:
 				// lower <= id < asize || 0 <= id <= upper blir til
 				// (lower <= id && id < asize) || (0 <= id && id <= upper)
-				if ((lowerMod.compareTo(idMod) <= 0 && idMod.compareTo(asize) < 0)
-						|| (BigInteger.valueOf(0).compareTo(idMod) <= 0 && idMod.compareTo(upperMod) <= 0)) {
-					return true;
-				} else {
-					return false;
-				}
+				return ((lowerMod.compareTo(idMod) <= 0 && idMod.compareTo(asize) < 0)
+						|| (BigInteger.valueOf(0).compareTo(idMod) <= 0 && idMod.compareTo(upperMod) <= 0));
 			} else if (lowerMod.compareTo(upperMod) < 0){
 				// Sjekker om lower <= id <= upper blir til
 				// lower <= id && id <= upper
-				if (lowerMod.compareTo(idMod) <= 0 && idMod.compareTo(upperMod) <= 0) {
-					return true;
-				} else {
-					return false;
-				}
+				return (lowerMod.compareTo(idMod) <= 0 && idMod.compareTo(upperMod) <= 0);
 			} else {
 				return lowerMod.compareTo(idMod) == 0;
 			}
